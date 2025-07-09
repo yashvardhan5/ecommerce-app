@@ -15,7 +15,7 @@ import SearchBar from './components/SearchBar'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from './components/ScrollToTop'
-import PrivacyPolicy from './components/Privacypolicy'
+import PrivacyPolicy from './components/PrivacyPolicy'
 
 const App = () => {
   return (
