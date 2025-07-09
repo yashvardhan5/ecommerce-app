@@ -3,14 +3,19 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const Product = () => {
 
   const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const { products, currency, addToCart, token } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState('')
   const [size, setSize] = useState('')
+  const navigate = useNavigate();
+
 
 
   // Inside Product component
@@ -71,7 +76,7 @@ const Product = () => {
                   onClick={() => setImage(item)}
                   onMouseEnter={() => setImage(item)}
                   onMouseLeave={() => setImage(productData.image.includes(image) ? image : productData.image[0])}
-                  className={`w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer border-2 rounded-md p-0.5 transition-all duration-200 ${image === item ? 'border-orange-500' : 'border-gray-300'} hover:border-orange-500`}/>
+                  className={`w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer border-2 rounded-md p-0.5 transition-all duration-200 ${image === item ? 'border-orange-500' : 'border-gray-300'} hover:border-orange-500`} />
               ))
             }
           </div>
@@ -113,13 +118,22 @@ const Product = () => {
             </div>
           </div>
           {/*---------------------ADD TO CART FUNCTIONALITY--------------------------- */}
-          <button onClick={() => {
-            addToCart(productData._id, size);
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-            });
-          }} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>ADD TO CART</button>
+
+          <button
+            onClick={() => {
+              if (!token) {
+                toast.info("Please log in to add items to your cart.");
+                navigate('/login');
+                return;
+              }
+              addToCart(productData._id, size);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}  className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>
+
+            ADD TO CART
+          </button>
+
+
           <hr className=' mt-8 sm:w-4/5' />
           <div className=' text-sm text-gray-500 mt-5 flex flex-col gap-1'>
             <p>100% Original product.</p>
@@ -145,7 +159,7 @@ const Product = () => {
       {/*----------------------------------Display related products section------------------------------ */}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} />
 
-    </div>
+    </div >
   ) : <div className=' opacity-0'></div>
 }
 
