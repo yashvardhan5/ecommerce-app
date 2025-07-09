@@ -4,7 +4,7 @@ import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const Product = () => {
@@ -50,7 +50,9 @@ const Product = () => {
 
   useEffect(() => {
     fetchProductData();
-
+    setSize('');
+    setImage('');
+    
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -123,12 +125,17 @@ const Product = () => {
             onClick={() => {
               if (!token) {
                 toast.info("Please log in to add items to your cart.");
-                navigate('/login');
+                setTimeout(() =>{navigate('/login');},2000);
                 return;
               }
+              if (!size) {
+                toast.info("Please select a size.");
+                return;
+              }
+
               addToCart(productData._id, size);
               window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}  className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>
+            }} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>
 
             ADD TO CART
           </button>
@@ -158,6 +165,8 @@ const Product = () => {
 
       {/*----------------------------------Display related products section------------------------------ */}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} />
+
+      <ToastContainer />
 
     </div >
   ) : <div className=' opacity-0'></div>

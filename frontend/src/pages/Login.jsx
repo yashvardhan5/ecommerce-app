@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
 
@@ -50,8 +50,7 @@ const Login = () => {
 
   useEffect(()=>{
     if (token) {
-      navigate('/')
-      
+      setTimeout(() =>{navigate('/');},2000);
     }
   },[token])
 
@@ -74,6 +73,8 @@ const Login = () => {
         }
       </div>
       <button className='bg-black text-white font-light px-8 py-2 mt-4'>{currentState === 'Login' ? 'Sign In': 'Sign Up'}</button>
+
+      <ToastContainer />
     </form>
   )
 }

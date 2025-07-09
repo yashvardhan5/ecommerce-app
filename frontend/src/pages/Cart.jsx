@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title';
 import { assets } from '../assets/assets';
 import CartTotal from '../components/CartTotal';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 //---------------------------This is for showcasing data on cart page------------------------------------------ 
 const Cart = () => {
 
@@ -89,6 +89,8 @@ const Cart = () => {
 
           </div>
         </div>
+
+        <ToastContainer />
 
       </div>
 
