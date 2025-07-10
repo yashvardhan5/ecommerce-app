@@ -51,7 +51,6 @@ const Product = () => {
   useEffect(() => {
     fetchProductData();
     setSize('');
-    setImage('');
     
     window.scrollTo({
       top: 0,
